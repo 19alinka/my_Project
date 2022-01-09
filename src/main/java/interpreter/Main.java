@@ -1,41 +1,38 @@
 package interpreter;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-        Map<String, String> word = new HashMap<>();
-        word.put("city", "город");
-        word.put("country", "страна");
-        word.put("monuments", "памятник");
 
-        java.io.File file = new java.io.File(String.valueOf(word));
+    private static  final String HELP_STRING = """
+                выбирай режим (введите цифру 1 или 2):""";
 
-        Properties properties = new Properties();
-        properties.load(new FileReader(file));
-
-        for (String key : properties.stringPropertyNames()) {
-            System.out.println(properties.get(key));
-        }
+    private static void help() {
+        System.out.println("Режимы:");
+        System.out.println("1. с английского на русский");
+        System.out.println("2. с русского на английский");
+        System.out.println(HELP_STRING);
     }
 
-//        Map<String, String> word = new HashMap<>();
-//        word.put("city", "город");
-//        word.put("country", "страна");
-//        word.put("monuments", "памятник");
-
-//        public static String randomWord() {
-//            Set<String> keys = word.keySet();
-//            String[] arrayKeys = (String[]) keys.toArray();
-//            int rnd = (int) (Math.random() * 2);
-//            return Arrays.toString(new String[]{arrayKeys[rnd]});
-//        }
-
-//        Scanner scanner = new Scanner(System.in);
-//        String line = scanner.nextLine();
-   // }
+    public static void main(String[] args) throws IOException {
+        Properties property = new Properties();
+        help();
+        Scanner scanner = new Scanner(System.in);
+        String team = scanner.nextLine();
+        System.out.println("Вводите слово с маленькой буквы!");
+        switch (team) {
+            case "1":
+                FileReader reader1 = new FileReader("src/main/resources/engWords.properties", StandardCharsets.UTF_8);
+                property.load(reader1);
+                Words.check(property, Words.random5Words(property));
+                break;
+            case "2":
+                FileReader reader2 = new FileReader("src/main/resources/rusWords.properties", StandardCharsets.UTF_8);
+                property.load(reader2);
+                Words.check(property, Words.random5Words(property));
+                break;
+        }
+    }
 }
