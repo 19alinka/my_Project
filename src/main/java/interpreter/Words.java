@@ -8,8 +8,8 @@ import java.util.Set;
 public class Words {
     // метод для выбора 5 слов из файла
     public static String[] random5Words(Properties property) {
-        String[] arrayProperty = property.stringPropertyNames().toArray(new String[property.size()]);
         // ключи из файла загружаю в массив
+        String[] arrayProperty = property.stringPropertyNames().toArray(new String[property.size()]);
         Set<Integer> set = new HashSet<>(); // коллекция для хранения уникальных чисел
         for (int i = 0; i < 10; i++) {
             int o = (int) (Math.random() * arrayProperty.length); // случайное число из размера массива
@@ -33,7 +33,7 @@ public class Words {
         for (int i = 0; i < array5Property.length; i++) {
             System.out.println(array5Property[i]);
             String string = scanner.nextLine();
-            if(property.getProperty(array5Property[i]).equals(string)) {
+            if(property.getProperty(array5Property[i]).equalsIgnoreCase(string)) {
                 System.out.println("Верно!");
                 System.out.println();
             } else {

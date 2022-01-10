@@ -21,7 +21,6 @@ public class Main {
         help();
         Scanner scanner = new Scanner(System.in);
         String team = scanner.nextLine();
-        System.out.println("Вводите слово с маленькой буквы!");
         switch (team) {
             case "1":
                 FileReader reader1 = new FileReader("src/main/resources/engWords.properties", StandardCharsets.UTF_8);
