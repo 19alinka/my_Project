@@ -1,9 +1,7 @@
 package interpreter;
 
-import java.util.HashSet;
-import java.util.Properties;
-import java.util.Scanner;
-import java.util.Set;
+import java.io.IOException;
+import java.util.*;
 
 public class Words {
     // метод для выбора 5 слов из файла
@@ -25,7 +23,7 @@ public class Words {
     }
 
     // метод для проверки на правильность
-    public static void check(Properties property, String[] arrayQuantity) {
+    public static void check(Properties property, String[] arrayQuantity) throws IOException, ClassNotFoundException {
         Scanner scanner = new Scanner(System.in);
         int error = 0;
         for (int i = 0; i < arrayQuantity.length; i++) {
@@ -36,11 +34,12 @@ public class Words {
             } else {
                 System.out.println("Не верно :(");
                 System.out.println("Правильный ответ: " + property.getProperty(arrayQuantity[i]));
+                SavingErrors.fixingErrors(arrayQuantity[i]); // добавляю каждую ошибку в map
                 error++;
             }
         }
         if(error > 0) {
-            System.out.printf("\n" + "Количество допущенных ошибок: %s из %d слов%n", error, arrayQuantity.length);
+            System.out.printf("\n" + "Количество допущенных ошибок: %s", error);
         } else {
             System.out.println("\n" + "Поздравляю, Вы на всё ответили правильно!");
         }

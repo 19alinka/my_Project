@@ -6,6 +6,11 @@ import java.util.*;
 
 public class Main {
 
+    private static String team;
+
+    public static String getTeam() {
+        return team;
+    }
     private static  final String HELP_STRING = """
                 Выберите режим (введите цифру 1 или 2):""";
 
@@ -16,24 +21,30 @@ public class Main {
         System.out.println(HELP_STRING);
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
         Properties property = new Properties();
         help();
         Scanner scanner = new Scanner(System.in);
-        String team = scanner.nextLine();
+        team = scanner.nextLine();
         System.out.println("Выберите количество слов: от 1 до 20");
         int quantity = scanner.nextInt();
         switch (team) {
-            case "1":
+            case "1" -> {
                 FileReader reader1 = new FileReader("src/main/resources/engWords.properties", StandardCharsets.UTF_8);
                 property.load(reader1);
                 Words.check(property, Words.randomWords(property, quantity));
-                break;
-            case "2":
+                System.out.println("\n" + "Слова, в которых Вы чаще всего ошибаетесь:");
+                System.out.println(Errors.numberOfErrors(SavingErrors.getEngMap()));
+            }
+            case "2" -> {
                 FileReader reader2 = new FileReader("src/main/resources/rusWords.properties", StandardCharsets.UTF_8);
                 property.load(reader2);
                 Words.check(property, Words.randomWords(property, quantity));
-                break;
+                System.out.println("\n" + "Слова, в которых Вы чаще всего ошибаетесь:");
+                System.out.println(Errors.numberOfErrors(SavingErrors.getRusMap()));
+            }
         }
+//        System.out.println(SavingErrors.getEngMap());
+//        System.out.println(SavingErrors.getRusMap());
     }
 }
